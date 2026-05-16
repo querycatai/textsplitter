@@ -1,0 +1,44 @@
+{
+  "name": "@querycat/textsplitter",
+  "version": "1.0.0",
+  "description": "A semantic text splitter that intelligently splits text by punctuation, preserves special patterns, and supports markdown content processing with multilingual support",
+  "main": "lib/index.js",
+  "type": "module",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "fibjs --test test/all.test.js"
+  },
+  "dependencies": {
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "unified": "^11.0.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "text-splitter",
+    "semantic-chunking",
+    "punctuation-splitting",
+    "markdown-processing",
+    "multilingual",
+    "chinese",
+    "japanese",
+    "korean",
+    "academic-text",
+    "citation-handling",
+    "pattern-protection",
+    "sentence-splitting",
+    "text-processing",
+    "nlp",
+    "chunking"
+  ],
+  "author": "QueryCat",
+  "license": "MIT",
+  "exports": {
+    ".": "./lib/index.js"
+  }
+}

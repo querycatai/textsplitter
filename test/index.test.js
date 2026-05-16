@@ -1,0 +1,10 @@
+import './basic.test.js'
+import './list.test.js'
+import './pattern.test.js'
+import './multilingual.test.js'
+import './edge.test.js'
+import './math.test.js'
+import './html.test.js'
+import './academic.test.js'
+import './sentence.test.js'
+import './markdown.test.js'  // Add markdown splitter test

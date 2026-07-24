@@ -1,6 +1,6 @@
 {
   "name": "@querycat/textsplitter",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A semantic text splitter that intelligently splits text by punctuation, preserves special patterns, and supports markdown content processing with multilingual support",
   "main": "lib/index.js",
   "type": "module",

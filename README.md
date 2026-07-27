@@ -45,12 +45,16 @@ npm install @querycat/textsplitter
 ### Basic Text Splitting
 
 ```javascript
-import { splitByPunctuation } from '@querycat/textsplitter';
+import { splitIntoChunks } from '@querycat/textsplitter';
 
 const text = 'Hello world. This is a test. How are you?';
-const chunks = splitByPunctuation(text);
+const chunks = splitIntoChunks(text);
 console.log(chunks);
-// Output: ['Hello world.', 'This is a test.', 'How are you?']
+// Output: [
+//   { blockIndex: 0, content: 'Hello world.' },
+//   { blockIndex: 0, content: 'This is a test.' },
+//   { blockIndex: 0, content: 'How are you?' }
+// ]
 ```
 
 ### Markdown Content Processing
@@ -76,29 +80,20 @@ chunks.forEach(chunk => {
 
 ## API Reference
 
-### `splitByPunctuation(text, maxLength?)`
+### `splitIntoChunks(text, maxLength?, options?)`
 
-Splits text into semantic chunks based on punctuation marks.
-
-**Parameters:**
-- `text` (string): The input text to split
-- `maxLength` (number, optional): Maximum length for each chunk (default: 256)
-
-**Returns:** Array of strings representing text chunks
-
-**Example:**
-```javascript
-const text = 'Dr. Smith arrived at 9 a.m. The meeting lasted 2 hours.';
-const chunks = splitByPunctuation(text);
-// Output: ['Dr. Smith arrived at 9 a.m. The meeting lasted 2 hours.']
-```
-
-### `splitIntoChunks(markdownText)`
-
-Processes markdown content and splits it into semantic chunks.
+Splits plain text or markdown content into semantic chunks based on
+punctuation marks and block structure.
 
 **Parameters:**
-- `markdownText` (string): Markdown formatted text
+- `text` (string): The input text to split. Markdown is supported but not required.
+- `maxLength` (number, optional): Maximum length for each chunk (default: 512)
+- `options` (object, optional):
+  - `merge` (boolean, default: `true`): Whether to merge tiny fragments left
+    over from splitting.
+  - `mergeThreshold` (number, default: `maxLength`): Adjacent pairs whose
+    combined length is below this threshold are merged into a single chunk
+    (capped at `maxLength`).
 
 **Returns:** Array of objects with `blockIndex` and `content` properties
 
@@ -121,7 +116,7 @@ The splitter automatically handles sentences longer than the maximum length:
 
 ```javascript
 const longText = 'a'.repeat(200) + ', ' + 'b'.repeat(200);
-const chunks = splitByPunctuation(longText);
+const chunks = splitIntoChunks(longText);
 // Automatically splits at comma while preserving punctuation
 ```
 
@@ -129,15 +124,19 @@ const chunks = splitByPunctuation(longText);
 
 ```javascript
 const multilingualText = '今天天气真好。我们去公园玩吧！你觉得怎么样？';
-const chunks = splitByPunctuation(multilingualText);
-// Output: ['今天天气真好。', '我们去公园玩吧！', '你觉得怎么样？']
+const chunks = splitIntoChunks(multilingualText);
+// Output: [
+//   { blockIndex: 0, content: '今天天气真好。' },
+//   { blockIndex: 0, content: '我们去公园玩吧！' },
+//   { blockIndex: 0, content: '你觉得怎么样？' }
+// ]
 ```
 
 ### Technical Content
 
 ```javascript
 const technicalText = 'Configure kafka.consumer.request.timeout.ms=3000. Visit https://example.com for details.';
-const chunks = splitByPunctuation(technicalText);
+const chunks = splitIntoChunks(technicalText);
 // Preserves configuration properties and URLs
 ```
 
@@ -145,7 +144,7 @@ const chunks = splitByPunctuation(technicalText);
 
 ```javascript
 const academicText = 'According to Smith et al. (2023), the results were significant. See references (1, 2, 3) for details.';
-const chunks = splitByPunctuation(academicText);
+const chunks = splitIntoChunks(academicText);
 // Preserves citation formats and reference numbers
 ```
 

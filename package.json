@@ -1,6 +1,6 @@
 {
   "name": "@querycat/textsplitter",
-  "version": "2.1.0",
+  "version": "3.1.0",
   "description": "A semantic text splitter that intelligently splits text by punctuation, preserves special patterns, and supports markdown content processing with multilingual support",
   "main": "lib/index.js",
   "type": "module",
@@ -11,11 +11,7 @@
   "scripts": {
     "test": "fibjs --test test/all.test.js"
   },
-  "dependencies": {
-    "remark-gfm": "^4.0.1",
-    "remark-parse": "^11.0.0",
-    "unified": "^11.0.5"
-  },
+  "dependencies": {},
   "publishConfig": {
     "access": "public"
   },

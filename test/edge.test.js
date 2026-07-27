@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { splitByPunctuation, splitIntoChunks } from '../lib/index.js';
+import { splitByPunctuation } from '../lib/textsplitter.js';
+import { splitIntoChunks } from '../lib/index.js';
 
 describe('Edge Cases', () => {
     describe('input validation', () => {

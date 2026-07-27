@@ -490,20 +490,21 @@ console.log('test');
             assert.equal(chunks[0].content, '这是一个没有标点的片段 它应该被合并到一起。');
         });
 
-        it('mergeShortestPairs merges smallest adjacent pair first', () => {
-            // Three chunks: A(3), B(50), C(4)
-            // Pairs: A+B=54, B+C=55 → smallest is A+B=54 ≤ 50? No, 54 > 50.
-            // With threshold=60: A+B=54 ≤ 60 → merge → AB(54), C(4) → AB+C=59 ≤ 60 → merge
+        it('mergeSequentially packs chunks up to target length', () => {
+            // Three chunks: A(3), B(49), C(3). With target=60:
+            // current=A(3), 3<60 → merge B → AB(53)
+            // current=AB(53), 53<60 → merge C → ABC(57)
             const text = 'Ab. ' + 'B'.repeat(48) + '. Cd.';
             const chunks = splitIntoChunks(text, undefined, { mergeThreshold: 60 });
             assert.equal(chunks.length, 1);
         });
 
-        it('mergeShortestPairs stops when smallest pair exceeds threshold', () => {
-            // Each sentence is 30+ chars, pairs are 60+ → exceeds threshold 50
+        it('mergeSequentially stops when target length reached', () => {
+            // Each sentence ~22 chars. With target=10:
+            // current=22 chars, 22 >= 10 → don't merge → 3 chunks.
             const text = 'This is sentence one. This is sentence two. This is sentence three.';
-            const chunks = splitIntoChunks(text, undefined, { mergeThreshold: 50 });
-            assert.ok(chunks.length >= 2, `Expected >= 2 chunks, got ${chunks.length}`);
+            const chunks = splitIntoChunks(text, undefined, { mergeThreshold: 10 });
+            assert.equal(chunks.length, 3);
             // All content preserved
             const combined = chunks.map(c => c.content).join(' ');
             assert.ok(combined.includes('sentence one'));

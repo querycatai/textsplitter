@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { splitByPunctuation } from '../lib/index.js';
+import { splitByPunctuation } from '../lib/textsplitter.js';
 
 describe('Long Sentence Splitting', () => {
     it('should not split short sentences', () => {
